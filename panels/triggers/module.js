@@ -19,34 +19,28 @@ function (angular, app, _, config, PanelMeta) {
     };
   });
 
-  module.controller('TriggersPanelCtrl', function($q, $scope, panelSrv, backendSrv, zabbixHelperSrv) {
+  module.controller('TriggersPanelCtrl', function($q, $scope, panelSrv, zabbixHelperSrv) {
 
     $scope.panelMeta = new PanelMeta({
       panelName: 'Zabbix triggers',
-      editIcon:  "fa fa-star",
+      editIcon:  "fa fa-bell",
       fullscreen: true,
     });
 
     $scope.panelMeta.addEditorTab('Options', 'app/panels/triggers/editor.html');
 
     var defaults = {
-      mode: 'starred',
-      query: '',
-      limit: 10,
-      tags: []
+      lastChangeField: true,
+      ageField: true,
+      infoField: true,
+      limit: 10
     };
 
-    $scope.modes = ['starred', 'search'];
-
     _.defaults($scope.panel, defaults);
-
     $scope.triggerList = [];
 
     $scope.init = function() {
       panelSrv.init($scope);
-      if ($scope.panel.tag) {
-        $scope.panel.tags = [$scope.panel.tag];
-      }
 
       if ($scope.isNewPanel()) {
         $scope.panel.title = "Zabbix Triggers";
@@ -54,16 +48,6 @@ function (angular, app, _, config, PanelMeta) {
     };
 
     $scope.refreshData = function() {
-      var params = {
-        limit: $scope.panel.limit
-      };
-
-      if ($scope.panel.mode === 'starred') {
-        params.starred = "true";
-      } else {
-        params.query = $scope.panel.query;
-        params.tag = $scope.panel.tags;
-      }
 
       var triggerColors = {
         0: '#DBDBDB',

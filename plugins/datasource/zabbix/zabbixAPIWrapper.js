@@ -538,8 +538,7 @@ function (angular, _) {
         select_acknowledges: 'extend',
         sortfield: 'clock',
         sortorder: 'DESC',
-        time_from: from,
-        limit: 1
+        time_from: from
       };
 
       return this.performZabbixAPIRequest('event.get', params)
