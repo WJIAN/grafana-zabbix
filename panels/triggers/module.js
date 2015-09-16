@@ -23,7 +23,7 @@ function (angular, app, _, config, PanelMeta) {
 
     $scope.panelMeta = new PanelMeta({
       panelName: 'Zabbix triggers',
-      editIcon:  "fa fa-bell",
+      editIcon:  "fa fa-lightbulb-o",
       fullscreen: true,
     });
 
